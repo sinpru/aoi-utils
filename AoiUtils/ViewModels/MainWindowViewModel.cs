@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Linq;
 using AoiUtils.Core.Services;
 using AoiUtils.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,6 +14,8 @@ public partial class MainWindowViewModel : ViewModelBase
     private readonly PackageManagerService _packageManagerService;
     private readonly SettingsService _settingsService;
     private readonly BackupService _backupService;
+    private readonly TweakService _tweakService;
+    private readonly AppLibraryService _appLibraryService;
     
     [ObservableProperty]
     private LocalizationManager _localizer;
@@ -43,7 +46,9 @@ public partial class MainWindowViewModel : ViewModelBase
         InstallViewModel installViewModel,
         DebloatViewModel debloatViewModel,
         TweaksViewModel tweaksViewModel,
-        BackupService backupService)
+        BackupService backupService,
+        TweakService tweakService,
+        AppLibraryService appLibraryService)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
@@ -52,6 +57,8 @@ public partial class MainWindowViewModel : ViewModelBase
         _debloatViewModel = debloatViewModel;
         _tweaksViewModel = tweaksViewModel;
         _backupService = backupService;
+        _tweakService = tweakService;
+        _appLibraryService = appLibraryService;
 
         // Sync busy states
         _installViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(InstallViewModel.IsBusy)) UpdateGlobalBusy(); };
@@ -91,20 +98,40 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         IsGlobalBusy = true;
         DashboardStatusText = Localizer["CreatingRestorePoint"];
-        
         var result = await _backupService.CreateRestorePointAsync("AoiUtils Auto-Backup");
-        
-        DashboardStatusText = result.IsSuccess 
-            ? Localizer["RestorePointCreated"] 
-            : Localizer["RestorePointFailed"];
-            
+        DashboardStatusText = result.IsSuccess ? Localizer["RestorePointCreated"] : Localizer["RestorePointFailed"];
         IsGlobalBusy = false;
     }
 
     [RelayCommand]
-    private async Task RestoreSystemAsync()
+    private async Task RestoreSystemAsync() => await _backupService.OpenSystemRestoreUIAsync();
+
+    [RelayCommand]
+    private async Task RunEssentialTweaksAsync()
     {
-        await _backupService.OpenSystemRestoreUIAsync();
+        IsGlobalBusy = true;
+        DashboardStatusText = "Applying essential tweaks...";
+        var essentials = _tweakService.GetTweaks().Where(t => t.Id is "ultimate_performance" or "disable_animations" or "show_extensions");
+        foreach (var tweak in essentials)
+        {
+            await _tweakService.RunTweakAsync(tweak);
+        }
+        DashboardStatusText = "Essential tweaks applied!";
+        IsGlobalBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task InstallBasicLibrariesAsync()
+    {
+        IsGlobalBusy = true;
+        DashboardStatusText = "Installing basic libraries (C++, .NET)...";
+        var libs = _appLibraryService.GetApps().Where(a => a.Category == "Libraries");
+        foreach (var lib in libs)
+        {
+            await _packageManagerService.InstallWithWinGetAsync(lib.WinGetId);
+        }
+        DashboardStatusText = "Basic libraries installed!";
+        IsGlobalBusy = false;
     }
 
     [RelayCommand]
@@ -113,9 +140,7 @@ public partial class MainWindowViewModel : ViewModelBase
         var app = Application.Current;
         if (app != null)
         {
-            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark 
-                ? ThemeVariant.Light 
-                : ThemeVariant.Dark;
+            app.RequestedThemeVariant = app.RequestedThemeVariant == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark;
         }
     }
 
