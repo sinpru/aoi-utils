@@ -7,11 +7,24 @@
     
     <Grid RowDefinitions="Auto, Auto, *, Auto">
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
-            <TextBlock Text="{Binding Localizer[AppInstallerHeader]}" FontSize="28" FontWeight="SemiBold"/>
-            <TextBlock Text="{Binding Localizer[AppInstallerSubHeader]}" 
-                       Foreground="{DynamicResource SystemBaseMediumColor}"/>
-        </StackPanel>
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="30, 30, 30, 0">
+            <StackPanel Grid.Column="0" Spacing="5">
+                <TextBlock Text="{Binding Localizer[AppInstallerHeader]}" FontSize="28" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding Localizer[AppInstallerSubHeader]}" 
+                           Foreground="{DynamicResource SystemBaseMediumColor}"/>
+            </StackPanel>
+            
+            <!-- Manager Selection -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
+                <RadioButton Content="WinGet" IsChecked="{Binding PreferredManager, Converter={StaticResource EqualityConverter}, ConverterParameter=WinGet}"/>
+                <RadioButton Content="Choco" IsChecked="{Binding PreferredManager, Converter={StaticResource EqualityConverter}, ConverterParameter=Choco}"/>
+                <Button Command="{Binding InstallChocoCommand}" 
+                        Content="Setup Choco" 
+                        FontSize="12" 
+                        Padding="10,5"
+                        Background="{DynamicResource SystemListLowColor}"/>
+            </StackPanel>
+        </Grid>
 
         <!-- Filter Bar -->
         <Border Grid.Row="1" Margin="30, 20, 30, 0">
@@ -40,15 +53,12 @@
                                 <Border Grid.Column="1" Width="40" Height="40" 
                                         Background="{DynamicResource SystemBaseLowColor}" 
                                         CornerRadius="4" Margin="10,0" ClipToBounds="True">
-                                    <Panel>
-                                        <!-- Letter Icon (Lightweight & Fast) -->
-                                        <TextBlock Text="{Binding Name[0]}" 
-                                                   VerticalAlignment="Center" 
-                                                   HorizontalAlignment="Center" 
-                                                   FontWeight="Bold" 
-                                                   FontSize="20"
-                                                   Foreground="#0078d4"/>
-                                    </Panel>
+                                    <TextBlock Text="{Binding Name[0]}" 
+                                               VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center" 
+                                               FontWeight="Bold" 
+                                               FontSize="20"
+                                               Foreground="#0078d4"/>
                                 </Border>
 
                                 <StackPanel Grid.Column="2" VerticalAlignment="Center">

@@ -15,6 +15,7 @@ public partial class InstallViewModel : ViewModelBase
 {
     private readonly AppLibraryService _appLibrary;
     private readonly PackageManagerService _packageManager;
+    private readonly NotificationService _notificationService;
     private readonly List<AppItem> _allApps;
     
     [ObservableProperty]
@@ -32,22 +33,24 @@ public partial class InstallViewModel : ViewModelBase
     [ObservableProperty]
     private string _progressText = "";
 
+    [ObservableProperty]
+    private string _preferredManager = "WinGet"; // WinGet or Choco
+
     public InstallViewModel(
         AppLibraryService appLibrary, 
         PackageManagerService packageManager,
-        LocalizationManager localizer)
+        LocalizationManager localizer,
+        NotificationService notificationService)
     {
         _appLibrary = appLibrary;
         _packageManager = packageManager;
         _localizer = localizer;
+        _notificationService = notificationService;
         _allApps = _appLibrary.GetApps();
         _filteredApps = new ObservableCollection<AppItem>(_allApps);
     }
 
-    partial void OnSearchTextChanged(string value)
-    {
-        FilterApps();
-    }
+    partial void OnSearchTextChanged(string value) => FilterApps();
 
     private void FilterApps()
     {
@@ -61,7 +64,6 @@ public partial class InstallViewModel : ViewModelBase
                 a.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || 
                 a.Category.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
                 a.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
-            
             FilteredApps = new ObservableCollection<AppItem>(filtered);
         }
     }
@@ -73,20 +75,28 @@ public partial class InstallViewModel : ViewModelBase
         if (!selected.Any()) return;
 
         IsBusy = true;
-        
         foreach (var app in selected)
         {
             ProgressText = string.Format(Localizer["Installing"], app.Name);
-            var result = await _packageManager.InstallWithWinGetAsync(app.WinGetId);
-            
-            if (!result.IsSuccess && !string.IsNullOrEmpty(app.ChocoId))
+            ProcessResult result;
+
+            if (PreferredManager == "Choco")
             {
-                ProgressText = string.Format(Localizer["WinGetFailedTryingChoco"], app.Name);
-                await _packageManager.InstallWithChocoAsync(app.ChocoId);
+                result = await _packageManager.InstallWithChocoAsync(app.ChocoId);
+            }
+            else
+            {
+                result = await _packageManager.InstallWithWinGetAsync(app.WinGetId);
+            }
+
+            if (!result.IsSuccess)
+            {
+                _notificationService.Show($"Failed to install {app.Name}");
             }
         }
 
-        ProgressText = Localizer["InstallationComplete"];
+        _notificationService.Show(Localizer["InstallationComplete"]);
+        ProgressText = "";
         IsBusy = false;
     }
 
@@ -97,20 +107,33 @@ public partial class InstallViewModel : ViewModelBase
         if (!selected.Any()) return;
 
         IsBusy = true;
-        
         foreach (var app in selected)
         {
             ProgressText = $"Uninstalling {app.Name}...";
-            var result = await _packageManager.UninstallWithWinGetAsync(app.WinGetId);
-            
-            if (!result.IsSuccess && !string.IsNullOrEmpty(app.ChocoId))
-            {
-                ProgressText = $"WinGet uninstall failed for {app.Name}, trying Chocolatey...";
+            if (PreferredManager == "Choco")
                 await _packageManager.UninstallWithChocoAsync(app.ChocoId);
-            }
+            else
+                await _packageManager.UninstallWithWinGetAsync(app.WinGetId);
         }
 
-        ProgressText = "Uninstall complete!";
+        _notificationService.Show("Uninstall complete!");
+        ProgressText = "";
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task InstallChocoAsync()
+    {
+        IsBusy = true;
+        ProgressText = "Installing Chocolatey...";
+        var result = await _packageManager.InstallChocolateyAsync();
+        
+        if (result.IsSuccess)
+            _notificationService.Show("Chocolatey installed successfully!");
+        else
+            _notificationService.Show("Failed to install Chocolatey. Run as Admin.");
+
+        ProgressText = "";
         IsBusy = false;
     }
 }

@@ -21,6 +21,9 @@ public partial class MainWindowViewModel : ViewModelBase
     private LocalizationManager _localizer;
 
     [ObservableProperty]
+    private NotificationService _notificationService;
+
+    [ObservableProperty]
     private ViewModelBase _currentPage;
 
     [ObservableProperty]
@@ -48,7 +51,8 @@ public partial class MainWindowViewModel : ViewModelBase
         TweaksViewModel tweaksViewModel,
         BackupService backupService,
         TweakService tweakService,
-        AppLibraryService appLibraryService)
+        AppLibraryService appLibraryService,
+        NotificationService notificationService)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
@@ -59,6 +63,7 @@ public partial class MainWindowViewModel : ViewModelBase
         _backupService = backupService;
         _tweakService = tweakService;
         _appLibraryService = appLibraryService;
+        _notificationService = notificationService;
 
         // Sync busy states
         _installViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(InstallViewModel.IsBusy)) UpdateGlobalBusy(); };
@@ -99,7 +104,13 @@ public partial class MainWindowViewModel : ViewModelBase
         IsGlobalBusy = true;
         DashboardStatusText = Localizer["CreatingRestorePoint"];
         var result = await _backupService.CreateRestorePointAsync("AoiUtils Auto-Backup");
-        DashboardStatusText = result.IsSuccess ? Localizer["RestorePointCreated"] : Localizer["RestorePointFailed"];
+        
+        if (result.IsSuccess)
+            NotificationService.Show(Localizer["RestorePointCreated"]);
+        else
+            NotificationService.Show(Localizer["RestorePointFailed"]);
+
+        DashboardStatusText = "";
         IsGlobalBusy = false;
     }
 
@@ -110,13 +121,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task RunEssentialTweaksAsync()
     {
         IsGlobalBusy = true;
-        DashboardStatusText = "Applying essential tweaks...";
         var essentials = _tweakService.GetTweaks().Where(t => t.Id is "ultimate_performance" or "disable_animations" or "show_extensions");
         foreach (var tweak in essentials)
         {
             await _tweakService.RunTweakAsync(tweak);
         }
-        DashboardStatusText = "Essential tweaks applied!";
+        NotificationService.Show("Essential tweaks applied!");
         IsGlobalBusy = false;
     }
 
@@ -124,13 +134,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task InstallBasicLibrariesAsync()
     {
         IsGlobalBusy = true;
-        DashboardStatusText = "Installing basic libraries (C++, .NET)...";
         var libs = _appLibraryService.GetApps().Where(a => a.Category == "Libraries");
         foreach (var lib in libs)
         {
             await _packageManagerService.InstallWithWinGetAsync(lib.WinGetId);
         }
-        DashboardStatusText = "Basic libraries installed!";
+        NotificationService.Show("Basic libraries installed!");
         IsGlobalBusy = false;
     }
 

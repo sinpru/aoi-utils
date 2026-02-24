@@ -34,6 +34,7 @@ public partial class App : Application
 
         // UI Services
         services.AddSingleton<LocalizationManager>();
+        services.AddSingleton<NotificationService>();
 
         // ViewModels
         services.AddTransient<MainWindowViewModel>();

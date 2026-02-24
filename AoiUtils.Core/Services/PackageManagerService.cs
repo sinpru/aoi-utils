@@ -37,6 +37,12 @@ public class PackageManagerService
         }
     }
 
+    public async Task<ProcessResult> InstallChocolateyAsync()
+    {
+        string script = "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))";
+        return await _runner.RunCommandAsync("powershell.exe", $"-Command \"{script}\"");
+    }
+
     public async Task<ProcessResult> InstallWithWinGetAsync(string packageId)
     {
         return await _runner.RunCommandAsync("winget", $"install --id {packageId} --silent --accept-package-agreements --accept-source-agreements");

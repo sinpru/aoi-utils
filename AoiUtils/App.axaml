@@ -16,6 +16,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:ResourceKeyToIconConverter x:Key="ResourceKeyToIconConverter"/>
+            <converters:EqualityConverter x:Key="EqualityConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="/Icons.axaml"/>
             </ResourceDictionary.MergedDictionaries>
