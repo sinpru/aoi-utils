@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="AoiUtils.Core/AoiUtils.Core.csproj" />
+  <Project Path="AoiUtils/AoiUtils.csproj" />
+</Solution>

@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:AoiUtils.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="AoiUtils.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Aoi Utils - Tech Rival"
+        Background="#1e1e1e"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True">
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <StackPanel Margin="40" Spacing="20" VerticalAlignment="Center">
+            <TextBlock Text="Aoi Utils" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+            
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" HorizontalAlignment="Center">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="WinGet:" Margin="5" Foreground="#aaaaaa"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WinGetStatus}" Margin="5" Foreground="White" FontWeight="SemiBold"/>
+                
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Chocolatey:" Margin="5" Foreground="#aaaaaa"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ChocoStatus}" Margin="5" Foreground="White" FontWeight="SemiBold"/>
+            </Grid>
+
+            <Button Command="{Binding CheckStatusCommand}" 
+                    Content="Refresh Status" 
+                    HorizontalAlignment="Center"
+                    Padding="20, 10"
+                    Background="#333333"
+                    Foreground="White"/>
+        </StackPanel>
+    </Panel>
+</Window>
