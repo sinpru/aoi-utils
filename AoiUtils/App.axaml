@@ -3,7 +3,7 @@
              x:Class="AoiUtils.App"
              xmlns:local="using:AoiUtils"
              xmlns:converters="using:AoiUtils.Converters"
-             RequestedThemeVariant="Dark">
+             RequestedThemeVariant="Light">
 
     <Application.DataTemplates>
         <local:ViewLocator/>

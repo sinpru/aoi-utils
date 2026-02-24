@@ -3,7 +3,7 @@
         xmlns:vm="using:AoiUtils.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
         x:Class="AoiUtils.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -11,48 +11,48 @@
         WindowStartupLocation="CenterScreen"
         ExtendClientAreaToDecorationsHint="True">
 
-    <Grid ColumnDefinitions="240, *">
+    <Grid ColumnDefinitions="260, *">
         <!-- Sidebar -->
-        <Border Grid.Column="0" Background="{DynamicResource SystemListLowColor}" BorderBrush="{DynamicResource SystemBaseLowColor}" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Background="{DynamicResource SystemChromeLowColor}" BorderBrush="{DynamicResource SystemBaseLowColor}" BorderThickness="0,0,1,0">
             <Grid RowDefinitions="Auto, *, Auto">
-                <StackPanel Grid.Row="0" Margin="0, 40, 0, 0">
+                <StackPanel Grid.Row="0" Margin="0, 50, 0, 0">
                     <TextBlock Text="{Binding Localizer[AppName]}" 
-                               FontSize="20" 
+                               FontSize="22" 
                                FontWeight="Bold" 
                                Foreground="#0078d4" 
                                HorizontalAlignment="Center" 
-                               Margin="0,0,0,30"/>
+                               Margin="0,0,0,40"/>
                     
-                    <ListBox Background="Transparent" BorderThickness="0">
-                        <ListBoxItem Padding="0">
+                    <ListBox Background="Transparent" BorderThickness="0" Margin="10,0">
+                        <ListBoxItem Padding="0" Margin="0,2">
                             <Button Command="{Binding NavigateToDashboardCommand}" Classes="SideMenu">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
                                     <PathIcon Data="{StaticResource home_regular}" Width="18" Height="18"/>
-                                    <TextBlock Text="{Binding Localizer[Dashboard]}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Localizer[Dashboard]}" VerticalAlignment="Center" FontWeight="Medium"/>
                                 </StackPanel>
                             </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="0">
+                        <ListBoxItem Padding="0" Margin="0,2">
                             <Button Command="{Binding NavigateToInstallCommand}" Classes="SideMenu">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
                                     <PathIcon Data="{StaticResource box_regular}" Width="18" Height="18"/>
-                                    <TextBlock Text="{Binding Localizer[Install]}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Localizer[Install]}" VerticalAlignment="Center" FontWeight="Medium"/>
                                 </StackPanel>
                             </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="0">
+                        <ListBoxItem Padding="0" Margin="0,2">
                             <Button Command="{Binding NavigateToDebloatCommand}" Classes="SideMenu">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
                                     <PathIcon Data="{StaticResource shield_regular}" Width="18" Height="18"/>
-                                    <TextBlock Text="{Binding Localizer[Debloat]}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Localizer[Debloat]}" VerticalAlignment="Center" FontWeight="Medium"/>
                                 </StackPanel>
                             </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="0">
+                        <ListBoxItem Padding="0" Margin="0,2">
                             <Button Command="{Binding NavigateToTweaksCommand}" Classes="SideMenu">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
                                     <PathIcon Data="{StaticResource settings_regular}" Width="18" Height="18"/>
-                                    <TextBlock Text="{Binding Localizer[Tweaks]}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Localizer[Tweaks]}" VerticalAlignment="Center" FontWeight="Medium"/>
                                 </StackPanel>
                             </Button>
                         </ListBoxItem>
@@ -60,17 +60,17 @@
                 </StackPanel>
 
                 <!-- Sidebar Footer (Settings) -->
-                <StackPanel Grid.Row="2" Margin="10, 20" Spacing="5">
-                    <Button Command="{Binding ToggleThemeCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
+                <StackPanel Grid.Row="2" Margin="15, 30" Spacing="8">
+                    <Button Command="{Binding ToggleThemeCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
                             <PathIcon Data="{StaticResource moon_regular}" Width="16" Height="16"/>
-                            <TextBlock Text="{Binding Localizer[Theme]}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localizer[Theme]}" VerticalAlignment="Center" FontSize="13"/>
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding ToggleLanguageCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
-                        <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Command="{Binding ToggleLanguageCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
                             <PathIcon Data="{StaticResource globe_regular}" Width="16" Height="16"/>
-                            <TextBlock Text="{Binding Localizer[Language]}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Localizer[Language]}" VerticalAlignment="Center" FontSize="13"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -81,9 +81,9 @@
         <Grid Grid.Column="1" RowDefinitions="Auto, Auto, *">
             <Border Grid.Row="0" Height="40" Background="Transparent" IsHitTestVisible="False"/>
             
-            <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="2" IsVisible="{Binding IsGlobalBusy}" Foreground="#0078d4"/>
+            <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="3" IsVisible="{Binding IsGlobalBusy}" Foreground="#0078d4" Background="Transparent" BorderThickness="0"/>
 
-            <ContentControl Grid.Row="2" Content="{Binding CurrentPage}"/>
+            <ContentControl Grid.Row="2" Content="{Binding CurrentPage}" Background="{DynamicResource SystemRegionBrush}"/>
         </Grid>
     </Grid>
 
@@ -91,11 +91,15 @@
         <Style Selector="Button.SideMenu">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="Padding" Value="15,12"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="8"/>
         </Style>
         <Style Selector="Button.SideMenu:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource SystemBaseLowColor}"/>
+            <Setter Property="Background" Value="{DynamicResource SystemListLowColor}"/>
+        </Style>
+        <Style Selector="Button.SideMenu:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource SystemListMediumColor}"/>
         </Style>
     </Window.Styles>
 </Window>

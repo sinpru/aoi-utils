@@ -14,8 +14,9 @@ public enum AppLanguage
 
 public class SettingsService
 {
-    public AppTheme CurrentTheme { get; set; } = AppTheme.Dark;
-    public AppLanguage CurrentLanguage { get; set; } = AppLanguage.English;
+    // Default to Light and Vietnamese
+    public AppTheme CurrentTheme { get; set; } = AppTheme.Light;
+    public AppLanguage CurrentLanguage { get; set; } = AppLanguage.Vietnamese;
 
     public string GetLanguageCode() => CurrentLanguage switch
     {

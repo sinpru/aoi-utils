@@ -43,6 +43,10 @@ public partial class App : Application
 
         Services = services.BuildServiceProvider();
 
+        // Initialize Language to Vietnamese by default
+        var localizer = Services.GetRequiredService<LocalizationManager>();
+        localizer.SetLanguage("vi-VN");
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
