@@ -27,19 +27,22 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private readonly InstallViewModel _installViewModel;
     private readonly DebloatViewModel _debloatViewModel;
+    private readonly TweaksViewModel _tweaksViewModel;
 
     public MainWindowViewModel(
         PackageManagerService packageManagerService, 
         SettingsService settingsService,
         LocalizationManager localizer,
         InstallViewModel installViewModel,
-        DebloatViewModel debloatViewModel)
+        DebloatViewModel debloatViewModel,
+        TweaksViewModel tweaksViewModel)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
         _localizer = localizer;
         _installViewModel = installViewModel;
         _debloatViewModel = debloatViewModel;
+        _tweaksViewModel = tweaksViewModel;
         
         _currentPage = this; // Default to Dashboard (self)
         _ = CheckStatusAsync();
@@ -53,6 +56,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [RelayCommand]
     private void NavigateToDebloat() => CurrentPage = _debloatViewModel;
+
+    [RelayCommand]
+    private void NavigateToTweaks() => CurrentPage = _tweaksViewModel;
 
     [RelayCommand]
     private async Task CheckStatusAsync()

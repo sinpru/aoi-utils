@@ -49,7 +49,7 @@
                             </Button>
                         </ListBoxItem>
                         <ListBoxItem Padding="0">
-                            <Button Command="" Classes="SideMenu" IsEnabled="False">
+                            <Button Command="{Binding NavigateToTweaksCommand}" Classes="SideMenu">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <PathIcon Data="{StaticResource settings_regular}" Width="18" Height="18"/>
                                     <TextBlock Text="{Binding Localizer[Tweaks]}" VerticalAlignment="Center"/>
