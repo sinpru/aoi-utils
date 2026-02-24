@@ -24,29 +24,37 @@
                                Margin="0,0,0,30"/>
                     
                     <ListBox Background="Transparent" BorderThickness="0">
-                        <ListBoxItem Padding="15,10">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <PathIcon Data="{StaticResource home_regular}" Width="18" Height="18"/>
-                                <TextBlock Text="{Binding Localizer[Dashboard]}" VerticalAlignment="Center"/>
-                            </StackPanel>
+                        <ListBoxItem Padding="0">
+                            <Button Command="{Binding NavigateToDashboardCommand}" Classes="SideMenu">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <PathIcon Data="{StaticResource home_regular}" Width="18" Height="18"/>
+                                    <TextBlock Text="{Binding Localizer[Dashboard]}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="15,10">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <PathIcon Data="{StaticResource box_regular}" Width="18" Height="18"/>
-                                <TextBlock Text="{Binding Localizer[Install]}" VerticalAlignment="Center"/>
-                            </StackPanel>
+                        <ListBoxItem Padding="0">
+                            <Button Command="{Binding NavigateToInstallCommand}" Classes="SideMenu">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <PathIcon Data="{StaticResource box_regular}" Width="18" Height="18"/>
+                                    <TextBlock Text="{Binding Localizer[Install]}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="15,10">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <PathIcon Data="{StaticResource shield_regular}" Width="18" Height="18"/>
-                                <TextBlock Text="{Binding Localizer[Debloat]}" VerticalAlignment="Center"/>
-                            </StackPanel>
+                        <ListBoxItem Padding="0">
+                            <Button Command="" Classes="SideMenu" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <PathIcon Data="{StaticResource shield_regular}" Width="18" Height="18"/>
+                                    <TextBlock Text="{Binding Localizer[Debloat]}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </ListBoxItem>
-                        <ListBoxItem Padding="15,10">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <PathIcon Data="{StaticResource settings_regular}" Width="18" Height="18"/>
-                                <TextBlock Text="{Binding Localizer[Tweaks]}" VerticalAlignment="Center"/>
-                            </StackPanel>
+                        <ListBoxItem Padding="0">
+                            <Button Command="" Classes="SideMenu" IsEnabled="False">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <PathIcon Data="{StaticResource settings_regular}" Width="18" Height="18"/>
+                                    <TextBlock Text="{Binding Localizer[Tweaks]}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </ListBoxItem>
                     </ListBox>
                 </StackPanel>
@@ -71,46 +79,20 @@
 
         <!-- Main Content -->
         <Grid Grid.Column="1" RowDefinitions="Auto, *">
-            <!-- Header -->
             <Border Grid.Row="0" Height="40" Background="Transparent" IsHitTestVisible="False"/>
-            
-            <!-- Content Area -->
-            <ScrollViewer Grid.Row="1">
-                <StackPanel Margin="30" Spacing="20">
-                    <TextBlock Text="{Binding Localizer[Dashboard]}" FontSize="28" FontWeight="SemiBold"/>
-                    
-                    <Grid ColumnDefinitions="*, *">
-                        <!-- Status Card -->
-                        <Border Grid.Column="0" Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20" Margin="0,0,10,0">
-                            <StackPanel Spacing="10">
-                                <TextBlock Text="{Binding Localizer[SystemStatus]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
-                                <Separator Background="{DynamicResource SystemBaseLowColor}"/>
-                                <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,10,0,0">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Localizer[WinGet]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WinGetStatus}" FontWeight="Bold" Margin="0,5"/>
-                                    
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Localizer[Chocolatey]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ChocoStatus}" FontWeight="Bold" Margin="0,5"/>
-                                </Grid>
-                                <Button Command="{Binding CheckStatusCommand}" 
-                                        Content="{Binding Localizer[Refresh]}" 
-                                        HorizontalAlignment="Right" 
-                                        Margin="0,10,0,0"/>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Quick Info Card -->
-                        <Border Grid.Column="1" Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20" Margin="10,0,0,0">
-                            <StackPanel Spacing="10">
-                                <TextBlock Text="{Binding Localizer[QuickActions]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
-                                <Separator Background="{DynamicResource SystemBaseLowColor}"/>
-                                <Button Content="Run Essential Tweaks" Width="200" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                                <Button Content="Clean Temp Files" Width="200" HorizontalAlignment="Center" Margin="0,5"/>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </StackPanel>
-            </ScrollViewer>
+            <ContentControl Grid.Row="1" Content="{Binding CurrentPage}"/>
         </Grid>
     </Grid>
+
+    <Window.Styles>
+        <Style Selector="Button.SideMenu">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.SideMenu:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource SystemBaseLowColor}"/>
+        </Style>
+    </Window.Styles>
 </Window>

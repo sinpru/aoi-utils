@@ -27,12 +27,14 @@ public partial class App : Application
         services.AddSingleton<SystemRunner>();
         services.AddSingleton<PackageManagerService>();
         services.AddSingleton<SettingsService>();
+        services.AddSingleton<AppLibraryService>();
 
         // UI Services
         services.AddSingleton<LocalizationManager>();
 
         // ViewModels
         services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<InstallViewModel>();
 
         Services = services.BuildServiceProvider();
 

@@ -36,4 +36,14 @@ public class PackageManagerService
             return false;
         }
     }
+
+    public async Task<ProcessResult> InstallWithWinGetAsync(string packageId)
+    {
+        return await _runner.RunCommandAsync("winget", $"install --id {packageId} --silent --accept-package-agreements --accept-source-agreements");
+    }
+
+    public async Task<ProcessResult> InstallWithChocoAsync(string packageId)
+    {
+        return await _runner.RunCommandAsync("choco", $"install {packageId} -y");
+    }
 }

@@ -17,22 +17,36 @@ public partial class MainWindowViewModel : ViewModelBase
     private LocalizationManager _localizer;
 
     [ObservableProperty]
+    private ViewModelBase _currentPage;
+
+    [ObservableProperty]
     private string _winGetStatus = "...";
 
     [ObservableProperty]
     private string _chocoStatus = "...";
 
+    private readonly InstallViewModel _installViewModel;
+
     public MainWindowViewModel(
         PackageManagerService packageManagerService, 
         SettingsService settingsService,
-        LocalizationManager localizer)
+        LocalizationManager localizer,
+        InstallViewModel installViewModel)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
         _localizer = localizer;
+        _installViewModel = installViewModel;
         
+        _currentPage = this; // Default to Dashboard (self)
         _ = CheckStatusAsync();
     }
+
+    [RelayCommand]
+    private void NavigateToDashboard() => CurrentPage = this;
+
+    [RelayCommand]
+    private void NavigateToInstall() => CurrentPage = _installViewModel;
 
     [RelayCommand]
     private async Task CheckStatusAsync()

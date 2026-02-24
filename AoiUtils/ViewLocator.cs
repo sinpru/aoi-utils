@@ -12,6 +12,11 @@ public class ViewLocator : IDataTemplate
     {
         if (data is null)
             return null;
+
+        if (data is MainWindowViewModel)
+        {
+            return new Views.DashboardView { DataContext = data };
+        }
         
         var name = data.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
         var type = Type.GetType(name);

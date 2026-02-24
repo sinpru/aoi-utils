@@ -1,0 +1,82 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AoiUtils.ViewModels"
+             xmlns:models="using:AoiUtils.Core.Models"
+             x:Class="AoiUtils.Views.InstallView"
+             x:DataType="vm:InstallViewModel">
+    
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
+            <TextBlock Text="App Installer" FontSize="28" FontWeight="SemiBold"/>
+            <TextBlock Text="Select the apps you want to install. WinGet is used as the primary source." 
+                       Foreground="{DynamicResource SystemBaseMediumColor}"/>
+        </StackPanel>
+
+        <!-- Filter Bar -->
+        <Border Grid.Row="1" Margin="30, 20, 30, 0">
+            <TextBox Text="{Binding SearchText}" 
+                     Watermark="Search apps or categories..." 
+                     Classes="revealPasswordButton"
+                     InnerLeftContent=" ">
+                <TextBox.InnerRightContent>
+                    <PathIcon Data="{StaticResource globe_regular}" Width="16" Margin="0,0,10,0" Opacity="0.5"/>
+                </TextBox.InnerRightContent>
+            </TextBox>
+        </Border>
+
+        <!-- App List -->
+        <ScrollViewer Grid.Row="2" Margin="30, 10">
+            <ItemsControl ItemsSource="{Binding FilteredApps}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:AppItem">
+                        <Border Background="{DynamicResource SystemListLowColor}" 
+                                CornerRadius="8" 
+                                Margin="0,0,0,8" 
+                                Padding="15,10">
+                            <Grid ColumnDefinitions="Auto, Auto, *, Auto">
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalAlignment="Center"/>
+                                
+                                <Border Grid.Column="1" Width="40" Height="40" 
+                                        Background="{DynamicResource SystemBaseLowColor}" 
+                                        CornerRadius="4" Margin="10,0">
+                                    <PathIcon Data="{StaticResource box_regular}" 
+                                              Width="20" Height="20" 
+                                              Foreground="#0078d4"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="{DynamicResource SystemBaseMediumColor}"/>
+                                </StackPanel>
+                                
+                                <Border Grid.Column="3" Background="#1e0078d4" CornerRadius="10" Padding="10,2" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Category}" 
+                                               FontSize="10" 
+                                               Foreground="#0078d4"
+                                               FontWeight="Bold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Border Grid.Row="3" Background="{DynamicResource SystemListLowColor}" Padding="30, 20">
+            <Grid ColumnDefinitions="*, Auto">
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ProgressText}" IsVisible="{Binding IsInstalling}" Foreground="#0078d4"/>
+                </StackPanel>
+                <Button Grid.Column="1" 
+                        Content="Install Selected" 
+                        Command="{Binding InstallSelectedCommand}"
+                        IsEnabled="{Binding !IsInstalling}"
+                        Padding="30, 10"
+                        Background="#0078d4"
+                        Foreground="White"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

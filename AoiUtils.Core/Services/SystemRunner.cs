@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.ComponentModel;
 using AoiUtils.Core.Models;
 
 namespace AoiUtils.Core.Services;
@@ -28,12 +29,18 @@ public class SystemRunner
         process.OutputDataReceived += (s, e) => { if (e.Data != null) output.AppendLine(e.Data); };
         process.ErrorDataReceived += (s, e) => { if (e.Data != null) error.AppendLine(e.Data); };
 
-        process.Start();
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
+        try
+        {
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
-        await process.WaitForExitAsync();
-
-        return new ProcessResult(process.ExitCode, output.ToString(), error.ToString());
+            await process.WaitForExitAsync();
+            return new ProcessResult(process.ExitCode, output.ToString(), error.ToString());
+        }
+        catch (Win32Exception)
+        {
+            return new ProcessResult(-1, "", $"Executable not found: {fileName}");
+        }
     }
 }
