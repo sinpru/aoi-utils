@@ -15,6 +15,7 @@ public class TweakService
 
     public List<Tweak> GetTweaks() => new()
     {
+        // Performance
         new("ultimate_performance", "Ultimate Performance Power Plan", "Enables the hidden Ultimate Performance power scheme.", TweakCategory.Performance,
             PowerShellCommand: "powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61",
             IconKey: "rocket_regular"),
@@ -22,6 +23,15 @@ public class TweakService
         new("disable_hibernation", "Disable Hibernation", "Disables hibernation and deletes the hiberfil.sys file to save space.", TweakCategory.Performance,
             PowerShellCommand: "powercfg -h off",
             IconKey: "rocket_regular"),
+
+        // Visuals & Explorer
+        new("align_taskbar_left", "Align Taskbar Left (Win11)", "Moves the Windows 11 Start button and icons to the left.", TweakCategory.Explorer,
+            PowerShellCommand: @"reg add ""HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"" /v TaskbarAl /t REG_DWORD /d 0 /f",
+            IconKey: "box_regular"),
+
+        new("align_taskbar_center", "Align Taskbar Center (Win11)", "Restores the Windows 11 Start button to the center.", TweakCategory.Explorer,
+            PowerShellCommand: @"reg add ""HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"" /v TaskbarAl /t REG_DWORD /d 1 /f",
+            IconKey: "box_regular"),
 
         new("disable_animations", "Disable Window Animations", "Speeds up the UI by disabling window minimize/maximize animations.", TweakCategory.Visuals,
             PowerShellCommand: @"reg add ""HKCU\Control Panel\Desktop\WindowMetrics"" /v MinAnimate /t REG_SZ /d 0 /f",
@@ -39,6 +49,16 @@ public class TweakService
             PowerShellCommand: @"reg add ""HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer"" /v link /t REG_BINARY /d 00000000 /f",
             IconKey: "box_regular"),
 
+        // Mouse & Keyboard
+        new("disable_mouse_acceleration", "Disable Mouse Acceleration", "Turns off 'Enhance pointer precision' for consistent mouse movement.", TweakCategory.Performance,
+            PowerShellCommand: @"reg add ""HKCU\Control Panel\Mouse"" /v MouseSpeed /t REG_SZ /d 0 /f",
+            IconKey: "gamepad_regular"),
+
+        new("disable_sticky_keys", "Disable Sticky Keys", "Prevents the Sticky Keys prompt from appearing when pressing Shift 5 times.", TweakCategory.Performance,
+            PowerShellCommand: @"reg add ""HKCU\Control Panel\Accessibility\StickyKeys"" /v Flags /t REG_SZ /d 506 /f",
+            IconKey: "gamepad_regular"),
+
+        // Gaming
         new("enable_game_mode", "Enable Game Mode", "Ensures Windows Game Mode is enabled for better gaming performance.", TweakCategory.Gaming,
             PowerShellCommand: @"reg add ""HKCU\Software\Microsoft\GameBar"" /v AllowAutoGameMode /t REG_DWORD /d 1 /f",
             IconKey: "gamepad_regular")
