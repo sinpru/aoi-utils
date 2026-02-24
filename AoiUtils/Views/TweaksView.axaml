@@ -5,7 +5,7 @@
              x:Class="AoiUtils.Views.TweaksView"
              x:DataType="vm:TweaksViewModel">
     
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
             <TextBlock Text="{Binding Localizer[SystemTweaksHeader]}" FontSize="28" FontWeight="SemiBold"/>
@@ -13,9 +13,14 @@
                        Foreground="{DynamicResource SystemBaseMediumColor}"/>
         </StackPanel>
 
+        <!-- Filter -->
+        <Border Grid.Row="1" Margin="30, 20, 30, 0">
+            <TextBox Text="{Binding SearchText}" Watermark="{Binding Localizer[SearchPlaceholder]}"/>
+        </Border>
+
         <!-- Task List -->
-        <ScrollViewer Grid.Row="1" Margin="30, 20">
-            <ItemsControl ItemsSource="{Binding Tweaks}">
+        <ScrollViewer Grid.Row="2" Margin="30, 10">
+            <ItemsControl ItemsSource="{Binding FilteredTweaks}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="models:Tweak">
                         <Border Background="{DynamicResource SystemListLowColor}" 
@@ -28,7 +33,7 @@
                                 <Border Grid.Column="1" Width="40" Height="40" 
                                         Background="{DynamicResource SystemBaseLowColor}" 
                                         CornerRadius="4" Margin="10,0">
-                                    <PathIcon Data="{StaticResource settings_regular}" 
+                                    <PathIcon Data="{Binding IconKey, Converter={StaticResource ResourceKeyToIconConverter}}" 
                                               Width="20" Height="20" 
                                               Foreground="#0078d4"/>
                                 </Border>
@@ -52,7 +57,7 @@
         </ScrollViewer>
 
         <!-- Footer -->
-        <Border Grid.Row="2" Background="{DynamicResource SystemListLowColor}" Padding="30, 20">
+        <Border Grid.Row="3" Background="{DynamicResource SystemListLowColor}" Padding="30, 20">
             <Grid ColumnDefinitions="*, Auto">
                 <StackPanel Grid.Column="0" VerticalAlignment="Center">
                     <TextBlock Text="{Binding StatusText}" Foreground="#0078d4"/>
@@ -60,7 +65,7 @@
                 <Button Grid.Column="1" 
                         Content="{Binding Localizer[ApplyTweaks]}" 
                         Command="{Binding RunSelectedTweaksCommand}"
-                        IsEnabled="{Binding !IsRunning}"
+                        IsEnabled="{Binding !IsBusy}"
                         Padding="30, 10"
                         Background="#0078d4"
                         Foreground="White"/>

@@ -46,4 +46,14 @@ public class PackageManagerService
     {
         return await _runner.RunCommandAsync("choco", $"install {packageId} -y");
     }
+
+    public async Task<ProcessResult> UninstallWithWinGetAsync(string packageId)
+    {
+        return await _runner.RunCommandAsync("winget", $"uninstall --id {packageId} --silent");
+    }
+
+    public async Task<ProcessResult> UninstallWithChocoAsync(string packageId)
+    {
+        return await _runner.RunCommandAsync("choco", $"uninstall {packageId} -y");
+    }
 }

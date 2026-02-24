@@ -13,7 +13,8 @@ public record Tweak(
     string Name,
     string Description,
     TweakCategory Category,
-    string PowerShellCommand = "")
+    string PowerShellCommand = "",
+    string IconKey = "settings_regular")
 {
     public bool IsSelected { get; set; }
 }

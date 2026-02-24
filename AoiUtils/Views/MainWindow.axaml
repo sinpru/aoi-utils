@@ -78,9 +78,12 @@
         </Border>
 
         <!-- Main Content -->
-        <Grid Grid.Column="1" RowDefinitions="Auto, *">
+        <Grid Grid.Column="1" RowDefinitions="Auto, Auto, *">
             <Border Grid.Row="0" Height="40" Background="Transparent" IsHitTestVisible="False"/>
-            <ContentControl Grid.Row="1" Content="{Binding CurrentPage}"/>
+            
+            <ProgressBar Grid.Row="1" IsIndeterminate="True" Height="2" IsVisible="{Binding IsGlobalBusy}" Foreground="#0078d4"/>
+
+            <ContentControl Grid.Row="2" Content="{Binding CurrentPage}"/>
         </Grid>
     </Grid>
 

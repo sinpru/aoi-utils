@@ -25,6 +25,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private string _chocoStatus = "...";
 
+    [ObservableProperty]
+    private bool _isGlobalBusy;
+
     private readonly InstallViewModel _installViewModel;
     private readonly DebloatViewModel _debloatViewModel;
     private readonly TweaksViewModel _tweaksViewModel;
@@ -43,9 +46,19 @@ public partial class MainWindowViewModel : ViewModelBase
         _installViewModel = installViewModel;
         _debloatViewModel = debloatViewModel;
         _tweaksViewModel = tweaksViewModel;
+
+        // Sync busy states
+        _installViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(InstallViewModel.IsBusy)) UpdateGlobalBusy(); };
+        _debloatViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(DebloatViewModel.IsBusy)) UpdateGlobalBusy(); };
+        _tweaksViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(TweaksViewModel.IsBusy)) UpdateGlobalBusy(); };
         
         _currentPage = this; // Default to Dashboard (self)
         _ = CheckStatusAsync();
+    }
+
+    private void UpdateGlobalBusy()
+    {
+        IsGlobalBusy = _installViewModel.IsBusy || _debloatViewModel.IsBusy || _tweaksViewModel.IsBusy;
     }
 
     [RelayCommand]

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,15 +14,19 @@ namespace AoiUtils.ViewModels;
 public partial class TweaksViewModel : ViewModelBase
 {
     private readonly TweakService _tweakService;
+    private readonly List<Tweak> _allTweaks;
     
     [ObservableProperty]
     private LocalizationManager _localizer;
 
     [ObservableProperty]
-    private ObservableCollection<Tweak> _tweaks;
+    private ObservableCollection<Tweak> _filteredTweaks;
 
     [ObservableProperty]
-    private bool _isRunning;
+    private string _searchText = string.Empty;
+
+    [ObservableProperty]
+    private bool _isBusy;
 
     [ObservableProperty]
     private string _statusText = "";
@@ -29,16 +35,39 @@ public partial class TweaksViewModel : ViewModelBase
     {
         _tweakService = tweakService;
         _localizer = localizer;
-        _tweaks = new ObservableCollection<Tweak>(_tweakService.GetTweaks());
+        _allTweaks = _tweakService.GetTweaks();
+        _filteredTweaks = new ObservableCollection<Tweak>(_allTweaks);
+    }
+
+    partial void OnSearchTextChanged(string value)
+    {
+        FilterTweaks();
+    }
+
+    private void FilterTweaks()
+    {
+        if (string.IsNullOrWhiteSpace(SearchText))
+        {
+            FilteredTweaks = new ObservableCollection<Tweak>(_allTweaks);
+        }
+        else
+        {
+            var filtered = _allTweaks.Where(t => 
+                t.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || 
+                t.Category.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                t.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase));
+            
+            FilteredTweaks = new ObservableCollection<Tweak>(filtered);
+        }
     }
 
     [RelayCommand]
     private async Task RunSelectedTweaksAsync()
     {
-        var selected = Tweaks.Where(t => t.IsSelected).ToList();
+        var selected = _allTweaks.Where(t => t.IsSelected).ToList();
         if (!selected.Any()) return;
 
-        IsRunning = true;
+        IsBusy = true;
         
         foreach (var tweak in selected)
         {
@@ -47,6 +76,6 @@ public partial class TweaksViewModel : ViewModelBase
         }
 
         StatusText = Localizer["TweaksApplied"];
-        IsRunning = false;
+        IsBusy = false;
     }
 }

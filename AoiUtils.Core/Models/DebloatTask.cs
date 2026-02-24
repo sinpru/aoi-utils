@@ -17,7 +17,8 @@ public record DebloatTask(
     string RegistryPath = "",
     string RegistryValue = "",
     object? RegistryData = null,
-    string PowerShellCommand = "")
+    string PowerShellCommand = "",
+    string IconKey = "shield_regular")
 {
     public bool IsSelected { get; set; }
 }

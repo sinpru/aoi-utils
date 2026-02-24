@@ -27,7 +27,7 @@ public partial class InstallViewModel : ViewModelBase
     private string _searchText = string.Empty;
 
     [ObservableProperty]
-    private bool _isInstalling;
+    private bool _isBusy;
 
     [ObservableProperty]
     private string _progressText = "";
@@ -72,7 +72,7 @@ public partial class InstallViewModel : ViewModelBase
         var selected = _allApps.Where(a => a.IsSelected).ToList();
         if (!selected.Any()) return;
 
-        IsInstalling = true;
+        IsBusy = true;
         
         foreach (var app in selected)
         {
@@ -87,6 +87,30 @@ public partial class InstallViewModel : ViewModelBase
         }
 
         ProgressText = Localizer["InstallationComplete"];
-        IsInstalling = false;
+        IsBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task UninstallSelectedAsync()
+    {
+        var selected = _allApps.Where(a => a.IsSelected).ToList();
+        if (!selected.Any()) return;
+
+        IsBusy = true;
+        
+        foreach (var app in selected)
+        {
+            ProgressText = $"Uninstalling {app.Name}...";
+            var result = await _packageManager.UninstallWithWinGetAsync(app.WinGetId);
+            
+            if (!result.IsSuccess && !string.IsNullOrEmpty(app.ChocoId))
+            {
+                ProgressText = $"WinGet uninstall failed for {app.Name}, trying Chocolatey...";
+                await _packageManager.UninstallWithChocoAsync(app.ChocoId);
+            }
+        }
+
+        ProgressText = "Uninstall complete!";
+        IsBusy = false;
     }
 }
