@@ -30,4 +30,10 @@
   <data name="TweaksApplied" xml:space="preserve"><value>Tweaks applied successfully!</value></data>
   <data name="Theme" xml:space="preserve"><value>Theme</value></data>
   <data name="Language" xml:space="preserve"><value>Language / Ngôn ngữ</value></data>
+  <data name="CreateRestorePoint" xml:space="preserve"><value>Create Restore Point</value></data>
+  <data name="RestoreSystem" xml:space="preserve"><value>Restore System</value></data>
+  <data name="BackupAndRestore" xml:space="preserve"><value>Backup &amp; Restore</value></data>
+  <data name="CreatingRestorePoint" xml:space="preserve"><value>Creating System Restore Point...</value></data>
+  <data name="RestorePointCreated" xml:space="preserve"><value>System Restore Point created successfully!</value></data>
+  <data name="RestorePointFailed" xml:space="preserve"><value>Failed to create Restore Point. Ensure you are running as Admin.</value></data>
 </root>

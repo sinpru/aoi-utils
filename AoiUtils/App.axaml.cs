@@ -30,6 +30,7 @@ public partial class App : Application
         services.AddSingleton<AppLibraryService>();
         services.AddSingleton<DebloatService>();
         services.AddSingleton<TweakService>();
+        services.AddSingleton<BackupService>();
 
         // UI Services
         services.AddSingleton<LocalizationManager>();

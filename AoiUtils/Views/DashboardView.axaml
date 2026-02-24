@@ -9,34 +9,64 @@
             <TextBlock Text="{Binding Localizer[Dashboard]}" FontSize="28" FontWeight="SemiBold"/>
             
             <Grid ColumnDefinitions="*, *">
-                <!-- Status Card -->
-                <Border Grid.Column="0" Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20" Margin="0,0,10,0">
-                    <StackPanel Spacing="10">
-                        <TextBlock Text="{Binding Localizer[SystemStatus]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
-                        <Separator Background="{DynamicResource SystemBaseLowColor}"/>
-                        <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,10,0,0">
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Localizer[WinGet]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WinGetStatus}" FontWeight="Bold" Margin="0,5"/>
-                            
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Localizer[Chocolatey]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ChocoStatus}" FontWeight="Bold" Margin="0,5"/>
-                        </Grid>
-                        <Button Command="{Binding CheckStatusCommand}" 
-                                Content="{Binding Localizer[Refresh]}" 
-                                HorizontalAlignment="Right" 
-                                Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Border>
+                <StackPanel Grid.Column="0" Spacing="20" Margin="0,0,10,0">
+                    <!-- Status Card -->
+                    <Border Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="{Binding Localizer[SystemStatus]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
+                            <Separator Background="{DynamicResource SystemBaseLowColor}"/>
+                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto" Margin="0,10,0,0">
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Localizer[WinGet]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WinGetStatus}" FontWeight="Bold" Margin="0,5"/>
+                                
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Localizer[Chocolatey]}" Foreground="{DynamicResource SystemBaseMediumColor}" Margin="0,5,20,5"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ChocoStatus}" FontWeight="Bold" Margin="0,5"/>
+                            </Grid>
+                            <Button Command="{Binding CheckStatusCommand}" 
+                                    Content="{Binding Localizer[Refresh]}" 
+                                    HorizontalAlignment="Right" 
+                                    Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Border>
 
-                <!-- Quick Info Card -->
-                <Border Grid.Column="1" Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20" Margin="10,0,0,0">
-                    <StackPanel Spacing="10">
-                        <TextBlock Text="{Binding Localizer[QuickActions]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
-                        <Separator Background="{DynamicResource SystemBaseLowColor}"/>
-                        <Button Content="{Binding Localizer[RunEssentialTweaks]}" Width="200" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                        <Button Content="{Binding Localizer[CleanTempFiles]}" Width="200" HorizontalAlignment="Center" Margin="0,5"/>
-                    </StackPanel>
-                </Border>
+                    <!-- Backup & Restore Card -->
+                    <Border Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="{Binding Localizer[BackupAndRestore]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
+                            <Separator Background="{DynamicResource SystemBaseLowColor}"/>
+                            
+                            <StackPanel Spacing="10" Margin="0,10,0,0">
+                                <Button Command="{Binding CreateRestorePointCommand}" 
+                                        Content="{Binding Localizer[CreateRestorePoint]}"
+                                        IsEnabled="{Binding !IsGlobalBusy}"
+                                        HorizontalAlignment="Stretch"/>
+                                
+                                <Button Command="{Binding RestoreSystemCommand}" 
+                                        Content="{Binding Localizer[RestoreSystem]}"
+                                        HorizontalAlignment="Stretch"/>
+                                
+                                <TextBlock Text="{Binding DashboardStatusText}" 
+                                           FontSize="12" 
+                                           Foreground="#0078d4" 
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="20" Margin="10,0,0,0">
+                    <!-- Quick Info Card -->
+                    <Border Background="{DynamicResource SystemListLowColor}" CornerRadius="8" Padding="20">
+                        <StackPanel Spacing="10">
+                            <TextBlock Text="{Binding Localizer[QuickActions]}" FontSize="18" FontWeight="SemiBold" Foreground="#0078d4"/>
+                            <Separator Background="{DynamicResource SystemBaseLowColor}"/>
+                            <Button Content="{Binding Localizer[RunEssentialTweaks]}" HorizontalAlignment="Stretch" Margin="0,10,0,0"/>
+                            <Button Content="{Binding Localizer[CleanTempFiles]}" HorizontalAlignment="Stretch" Margin="0,5"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
             </Grid>
         </StackPanel>
     </ScrollViewer>

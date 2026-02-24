@@ -12,6 +12,7 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     private readonly PackageManagerService _packageManagerService;
     private readonly SettingsService _settingsService;
+    private readonly BackupService _backupService;
     
     [ObservableProperty]
     private LocalizationManager _localizer;
@@ -28,6 +29,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isGlobalBusy;
 
+    [ObservableProperty]
+    private string _dashboardStatusText = "";
+
     private readonly InstallViewModel _installViewModel;
     private readonly DebloatViewModel _debloatViewModel;
     private readonly TweaksViewModel _tweaksViewModel;
@@ -38,7 +42,8 @@ public partial class MainWindowViewModel : ViewModelBase
         LocalizationManager localizer,
         InstallViewModel installViewModel,
         DebloatViewModel debloatViewModel,
-        TweaksViewModel tweaksViewModel)
+        TweaksViewModel tweaksViewModel,
+        BackupService backupService)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
@@ -46,6 +51,7 @@ public partial class MainWindowViewModel : ViewModelBase
         _installViewModel = installViewModel;
         _debloatViewModel = debloatViewModel;
         _tweaksViewModel = tweaksViewModel;
+        _backupService = backupService;
 
         // Sync busy states
         _installViewModel.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(InstallViewModel.IsBusy)) UpdateGlobalBusy(); };
@@ -78,6 +84,27 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         WinGetStatus = await _packageManagerService.IsWinGetInstalledAsync() ? "Installed" : "Not Found";
         ChocoStatus = await _packageManagerService.IsChocolateyInstalledAsync() ? "Installed" : "Not Found";
+    }
+
+    [RelayCommand]
+    private async Task CreateRestorePointAsync()
+    {
+        IsGlobalBusy = true;
+        DashboardStatusText = Localizer["CreatingRestorePoint"];
+        
+        var result = await _backupService.CreateRestorePointAsync("AoiUtils Auto-Backup");
+        
+        DashboardStatusText = result.IsSuccess 
+            ? Localizer["RestorePointCreated"] 
+            : Localizer["RestorePointFailed"];
+            
+        IsGlobalBusy = false;
+    }
+
+    [RelayCommand]
+    private async Task RestoreSystemAsync()
+    {
+        await _backupService.OpenSystemRestoreUIAsync();
     }
 
     [RelayCommand]

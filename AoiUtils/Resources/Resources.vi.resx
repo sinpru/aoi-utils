@@ -30,4 +30,10 @@
   <data name="TweaksApplied" xml:space="preserve"><value>Đã áp dụng tùy chỉnh thành công!</value></data>
   <data name="Theme" xml:space="preserve"><value>Giao diện</value></data>
   <data name="Language" xml:space="preserve"><value>Ngôn ngữ / Language</value></data>
+  <data name="CreateRestorePoint" xml:space="preserve"><value>Tạo điểm khôi phục</value></data>
+  <data name="RestoreSystem" xml:space="preserve"><value>Khôi phục hệ thống</value></data>
+  <data name="BackupAndRestore" xml:space="preserve"><value>Sao lưu &amp; Khôi phục</value></data>
+  <data name="CreatingRestorePoint" xml:space="preserve"><value>Đang tạo điểm khôi phục hệ thống...</value></data>
+  <data name="RestorePointCreated" xml:space="preserve"><value>Đã tạo điểm khôi phục hệ thống thành công!</value></data>
+  <data name="RestorePointFailed" xml:space="preserve"><value>Tạo điểm khôi phục thất bại. Hãy đảm bảo bạn chạy với quyền Admin.</value></data>
 </root>
