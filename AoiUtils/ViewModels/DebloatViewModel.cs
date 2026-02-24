@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AoiUtils.Core.Models;
 using AoiUtils.Core.Services;
+using AoiUtils.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -11,6 +12,9 @@ namespace AoiUtils.ViewModels;
 public partial class DebloatViewModel : ViewModelBase
 {
     private readonly DebloatService _debloatService;
+    
+    [ObservableProperty]
+    private LocalizationManager _localizer;
 
     [ObservableProperty]
     private ObservableCollection<DebloatTask> _tasks;
@@ -21,9 +25,10 @@ public partial class DebloatViewModel : ViewModelBase
     [ObservableProperty]
     private string _statusText = "";
 
-    public DebloatViewModel(DebloatService debloatService)
+    public DebloatViewModel(DebloatService debloatService, LocalizationManager localizer)
     {
         _debloatService = debloatService;
+        _localizer = localizer;
         _tasks = new ObservableCollection<DebloatTask>(_debloatService.GetTasks());
     }
 
@@ -37,11 +42,11 @@ public partial class DebloatViewModel : ViewModelBase
         
         foreach (var task in selected)
         {
-            StatusText = $"Applying: {task.Name}...";
+            StatusText = string.Format(Localizer["Applying"], task.Name);
             await _debloatService.RunTaskAsync(task);
         }
 
-        StatusText = "Optimization complete! Some changes may require a restart.";
+        StatusText = Localizer["OptimizationComplete"];
         IsRunning = false;
     }
 }

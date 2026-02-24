@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AoiUtils.Core.Models;
 using AoiUtils.Core.Services;
+using AoiUtils.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -15,6 +16,9 @@ public partial class InstallViewModel : ViewModelBase
     private readonly AppLibraryService _appLibrary;
     private readonly PackageManagerService _packageManager;
     private readonly List<AppItem> _allApps;
+    
+    [ObservableProperty]
+    private LocalizationManager _localizer;
 
     [ObservableProperty]
     private ObservableCollection<AppItem> _filteredApps;
@@ -28,10 +32,14 @@ public partial class InstallViewModel : ViewModelBase
     [ObservableProperty]
     private string _progressText = "";
 
-    public InstallViewModel(AppLibraryService appLibrary, PackageManagerService packageManager)
+    public InstallViewModel(
+        AppLibraryService appLibrary, 
+        PackageManagerService packageManager,
+        LocalizationManager localizer)
     {
         _appLibrary = appLibrary;
         _packageManager = packageManager;
+        _localizer = localizer;
         _allApps = _appLibrary.GetApps();
         _filteredApps = new ObservableCollection<AppItem>(_allApps);
     }
@@ -68,17 +76,17 @@ public partial class InstallViewModel : ViewModelBase
         
         foreach (var app in selected)
         {
-            ProgressText = $"Installing {app.Name}...";
+            ProgressText = string.Format(Localizer["Installing"], app.Name);
             var result = await _packageManager.InstallWithWinGetAsync(app.WinGetId);
             
             if (!result.IsSuccess && !string.IsNullOrEmpty(app.ChocoId))
             {
-                ProgressText = $"WinGet failed for {app.Name}, trying Chocolatey...";
+                ProgressText = string.Format(Localizer["WinGetFailedTryingChoco"], app.Name);
                 await _packageManager.InstallWithChocoAsync(app.ChocoId);
             }
         }
 
-        ProgressText = "Installation complete!";
+        ProgressText = Localizer["InstallationComplete"];
         IsInstalling = false;
     }
 }

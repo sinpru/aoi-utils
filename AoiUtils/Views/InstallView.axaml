@@ -8,15 +8,15 @@
     <Grid RowDefinitions="Auto, Auto, *, Auto">
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
-            <TextBlock Text="App Installer" FontSize="28" FontWeight="SemiBold"/>
-            <TextBlock Text="Select the apps you want to install. WinGet is used as the primary source." 
+            <TextBlock Text="{Binding Localizer[AppInstallerHeader]}" FontSize="28" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding Localizer[AppInstallerSubHeader]}" 
                        Foreground="{DynamicResource SystemBaseMediumColor}"/>
         </StackPanel>
 
         <!-- Filter Bar -->
         <Border Grid.Row="1" Margin="30, 20, 30, 0">
             <TextBox Text="{Binding SearchText}" 
-                     Watermark="Search apps or categories..." 
+                     Watermark="{Binding Localizer[SearchPlaceholder]}" 
                      Classes="revealPasswordButton"
                      InnerLeftContent=" ">
                 <TextBox.InnerRightContent>
@@ -70,7 +70,7 @@
                     <TextBlock Text="{Binding ProgressText}" IsVisible="{Binding IsInstalling}" Foreground="#0078d4"/>
                 </StackPanel>
                 <Button Grid.Column="1" 
-                        Content="Install Selected" 
+                        Content="{Binding Localizer[InstallSelected]}" 
                         Command="{Binding InstallSelectedCommand}"
                         IsEnabled="{Binding !IsInstalling}"
                         Padding="30, 10"

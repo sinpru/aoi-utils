@@ -8,8 +8,8 @@
     <Grid RowDefinitions="Auto, *, Auto">
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
-            <TextBlock Text="System Tweaks" FontSize="28" FontWeight="SemiBold"/>
-            <TextBlock Text="Advanced optimizations for performance, visuals, and system behavior." 
+            <TextBlock Text="{Binding Localizer[SystemTweaksHeader]}" FontSize="28" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding Localizer[SystemTweaksSubHeader]}" 
                        Foreground="{DynamicResource SystemBaseMediumColor}"/>
         </StackPanel>
 
@@ -58,7 +58,7 @@
                     <TextBlock Text="{Binding StatusText}" Foreground="#0078d4"/>
                 </StackPanel>
                 <Button Grid.Column="1" 
-                        Content="Apply Tweaks" 
+                        Content="{Binding Localizer[ApplyTweaks]}" 
                         Command="{Binding RunSelectedTweaksCommand}"
                         IsEnabled="{Binding !IsRunning}"
                         Padding="30, 10"

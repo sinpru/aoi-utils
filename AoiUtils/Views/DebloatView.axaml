@@ -8,8 +8,8 @@
     <Grid RowDefinitions="Auto, *, Auto">
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="30, 30, 30, 0" Spacing="5">
-            <TextBlock Text="System Optimizer" FontSize="28" FontWeight="SemiBold"/>
-            <TextBlock Text="Optimize Windows by disabling bloatware and privacy-invading features." 
+            <TextBlock Text="{Binding Localizer[SystemOptimizerHeader]}" FontSize="28" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding Localizer[SystemOptimizerSubHeader]}" 
                        Foreground="{DynamicResource SystemBaseMediumColor}"/>
         </StackPanel>
 
@@ -58,7 +58,7 @@
                     <TextBlock Text="{Binding StatusText}" Foreground="#0078d4"/>
                 </StackPanel>
                 <Button Grid.Column="1" 
-                        Content="Optimize System" 
+                        Content="{Binding Localizer[OptimizeSystem]}" 
                         Command="{Binding RunSelectedTasksCommand}"
                         IsEnabled="{Binding !IsRunning}"
                         Padding="30, 10"

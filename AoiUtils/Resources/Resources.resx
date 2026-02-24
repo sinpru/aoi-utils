@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <data name="AppName" xml:space="preserve">
-    <value>Aoi Utils</value>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="Install" xml:space="preserve">
-    <value>Install</value>
-  </data>
-  <data name="Debloat" xml:space="preserve">
-    <value>Debloat</value>
-  </data>
-  <data name="Tweaks" xml:space="preserve">
-    <value>Tweaks</value>
-  </data>
-  <data name="SystemStatus" xml:space="preserve">
-    <value>System Status</value>
-  </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="WinGet" xml:space="preserve">
-    <value>WinGet</value>
-  </data>
-  <data name="Chocolatey" xml:space="preserve">
-    <value>Chocolatey</value>
-  </data>
-  <data name="QuickActions" xml:space="preserve">
-    <value>Quick Actions</value>
-  </data>
+  <data name="AppName" xml:space="preserve"><value>Aoi Utils</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Install" xml:space="preserve"><value>Install</value></data>
+  <data name="Debloat" xml:space="preserve"><value>Debloat</value></data>
+  <data name="Tweaks" xml:space="preserve"><value>Tweaks</value></data>
+  <data name="SystemStatus" xml:space="preserve"><value>System Status</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="WinGet" xml:space="preserve"><value>WinGet</value></data>
+  <data name="Chocolatey" xml:space="preserve"><value>Chocolatey</value></data>
+  <data name="QuickActions" xml:space="preserve"><value>Quick Actions</value></data>
+  <data name="RunEssentialTweaks" xml:space="preserve"><value>Run Essential Tweaks</value></data>
+  <data name="CleanTempFiles" xml:space="preserve"><value>Clean Temp Files</value></data>
+  <data name="AppInstallerHeader" xml:space="preserve"><value>App Installer</value></data>
+  <data name="AppInstallerSubHeader" xml:space="preserve"><value>Select the apps you want to install. WinGet is used as the primary source.</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Search apps or categories...</value></data>
+  <data name="InstallSelected" xml:space="preserve"><value>Install Selected</value></data>
+  <data name="Installing" xml:space="preserve"><value>Installing {0}...</value></data>
+  <data name="WinGetFailedTryingChoco" xml:space="preserve"><value>WinGet failed for {0}, trying Chocolatey...</value></data>
+  <data name="InstallationComplete" xml:space="preserve"><value>Installation complete!</value></data>
+  <data name="SystemOptimizerHeader" xml:space="preserve"><value>System Optimizer</value></data>
+  <data name="SystemOptimizerSubHeader" xml:space="preserve"><value>Optimize Windows by disabling bloatware and privacy-invading features.</value></data>
+  <data name="OptimizeSystem" xml:space="preserve"><value>Optimize System</value></data>
+  <data name="Applying" xml:space="preserve"><value>Applying: {0}...</value></data>
+  <data name="OptimizationComplete" xml:space="preserve"><value>Optimization complete! Some changes may require a restart.</value></data>
+  <data name="SystemTweaksHeader" xml:space="preserve"><value>System Tweaks</value></data>
+  <data name="SystemTweaksSubHeader" xml:space="preserve"><value>Advanced optimizations for performance, visuals, and system behavior.</value></data>
+  <data name="ApplyTweaks" xml:space="preserve"><value>Apply Tweaks</value></data>
+  <data name="TweaksApplied" xml:space="preserve"><value>Tweaks applied successfully!</value></data>
+  <data name="Theme" xml:space="preserve"><value>Theme</value></data>
+  <data name="Language" xml:space="preserve"><value>Language / Ngôn ngữ</value></data>
 </root>

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AoiUtils.Core.Models;
 using AoiUtils.Core.Services;
+using AoiUtils.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -11,6 +12,9 @@ namespace AoiUtils.ViewModels;
 public partial class TweaksViewModel : ViewModelBase
 {
     private readonly TweakService _tweakService;
+    
+    [ObservableProperty]
+    private LocalizationManager _localizer;
 
     [ObservableProperty]
     private ObservableCollection<Tweak> _tweaks;
@@ -21,9 +25,10 @@ public partial class TweaksViewModel : ViewModelBase
     [ObservableProperty]
     private string _statusText = "";
 
-    public TweaksViewModel(TweakService tweakService)
+    public TweaksViewModel(TweakService tweakService, LocalizationManager localizer)
     {
         _tweakService = tweakService;
+        _localizer = localizer;
         _tweaks = new ObservableCollection<Tweak>(_tweakService.GetTweaks());
     }
 
@@ -37,11 +42,11 @@ public partial class TweaksViewModel : ViewModelBase
         
         foreach (var tweak in selected)
         {
-            StatusText = $"Applying: {tweak.Name}...";
+            StatusText = string.Format(Localizer["Applying"], tweak.Name);
             await _tweakService.RunTweakAsync(tweak);
         }
 
-        StatusText = "Tweaks applied successfully!";
+        StatusText = Localizer["TweaksApplied"];
         IsRunning = false;
     }
 }

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <data name="AppName" xml:space="preserve">
-    <value>Aoi Utils</value>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Bảng điều khiển</value>
-  </data>
-  <data name="Install" xml:space="preserve">
-    <value>Cài đặt</value>
-  </data>
-  <data name="Debloat" xml:space="preserve">
-    <value>Gỡ bỏ rác</value>
-  </data>
-  <data name="Tweaks" xml:space="preserve">
-    <value>Tùy chỉnh</value>
-  </data>
-  <data name="SystemStatus" xml:space="preserve">
-    <value>Trạng thái hệ thống</value>
-  </data>
-  <data name="Refresh" xml:space="preserve">
-    <value>Làm mới</value>
-  </data>
-  <data name="WinGet" xml:space="preserve">
-    <value>WinGet</value>
-  </data>
-  <data name="Chocolatey" xml:space="preserve">
-    <value>Chocolatey</value>
-  </data>
-  <data name="QuickActions" xml:space="preserve">
-    <value>Thao tác nhanh</value>
-  </data>
+  <data name="AppName" xml:space="preserve"><value>Aoi Utils</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Bảng điều khiển</value></data>
+  <data name="Install" xml:space="preserve"><value>Cài đặt</value></data>
+  <data name="Debloat" xml:space="preserve"><value>Gỡ bỏ rác</value></data>
+  <data name="Tweaks" xml:space="preserve"><value>Tùy chỉnh</value></data>
+  <data name="SystemStatus" xml:space="preserve"><value>Trạng thái hệ thống</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Làm mới</value></data>
+  <data name="WinGet" xml:space="preserve"><value>WinGet</value></data>
+  <data name="Chocolatey" xml:space="preserve"><value>Chocolatey</value></data>
+  <data name="QuickActions" xml:space="preserve"><value>Thao tác nhanh</value></data>
+  <data name="RunEssentialTweaks" xml:space="preserve"><value>Chạy tùy chỉnh cơ bản</value></data>
+  <data name="CleanTempFiles" xml:space="preserve"><value>Dọn dẹp file tạm</value></data>
+  <data name="AppInstallerHeader" xml:space="preserve"><value>Trình cài đặt ứng dụng</value></data>
+  <data name="AppInstallerSubHeader" xml:space="preserve"><value>Chọn các ứng dụng bạn muốn cài đặt. WinGet được sử dụng làm nguồn chính.</value></data>
+  <data name="SearchPlaceholder" xml:space="preserve"><value>Tìm kiếm ứng dụng hoặc danh mục...</value></data>
+  <data name="InstallSelected" xml:space="preserve"><value>Cài đặt đã chọn</value></data>
+  <data name="Installing" xml:space="preserve"><value>Đang cài đặt {0}...</value></data>
+  <data name="WinGetFailedTryingChoco" xml:space="preserve"><value>WinGet thất bại cho {0}, đang thử Chocolatey...</value></data>
+  <data name="InstallationComplete" xml:space="preserve"><value>Cài đặt hoàn tất!</value></data>
+  <data name="SystemOptimizerHeader" xml:space="preserve"><value>Tối ưu hóa hệ thống</value></data>
+  <data name="SystemOptimizerSubHeader" xml:space="preserve"><value>Tối ưu hóa Windows bằng cách tắt các phần mềm rác và các tính năng xâm phạm quyền riêng tư.</value></data>
+  <data name="OptimizeSystem" xml:space="preserve"><value>Tối ưu hóa ngay</value></data>
+  <data name="Applying" xml:space="preserve"><value>Đang áp dụng: {0}...</value></data>
+  <data name="OptimizationComplete" xml:space="preserve"><value>Tối ưu hóa hoàn tất! Một số thay đổi có thể yêu cầu khởi động lại.</value></data>
+  <data name="SystemTweaksHeader" xml:space="preserve"><value>Tùy chỉnh hệ thống</value></data>
+  <data name="SystemTweaksSubHeader" xml:space="preserve"><value>Các tối ưu hóa nâng cao cho hiệu suất, giao diện và hành vi hệ thống.</value></data>
+  <data name="ApplyTweaks" xml:space="preserve"><value>Áp dụng tùy chỉnh</value></data>
+  <data name="TweaksApplied" xml:space="preserve"><value>Đã áp dụng tùy chỉnh thành công!</value></data>
+  <data name="Theme" xml:space="preserve"><value>Giao diện</value></data>
+  <data name="Language" xml:space="preserve"><value>Ngôn ngữ / Language</value></data>
 </root>
