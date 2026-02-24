@@ -5,7 +5,7 @@ namespace AoiUtils.Core.Services;
 
 public class AppLibraryService
 {
-    public List<AppItem> GetApps() => new()
+    public List<AppItemDto> GetApps() => new()
     {
         // AIO Libraries & Runtimes
         new("cpp_redist", "C++ Redistributables AIO", "All Microsoft Visual C++ Redistributable packages.", "Libraries", "Microsoft.VCRedist.2015+.x64", "vcredist-all", "microsoft.com"),

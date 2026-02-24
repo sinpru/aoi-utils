@@ -1,7 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:AoiUtils.ViewModels"
-             xmlns:models="using:AoiUtils.Core.Models"
+             xmlns:models="using:AoiUtils.Models"
              x:Class="AoiUtils.Views.InstallView"
              x:DataType="vm:InstallViewModel">
     
@@ -14,7 +14,6 @@
                            Foreground="{DynamicResource SystemBaseMediumColor}"/>
             </StackPanel>
             
-            <!-- Manager Selection -->
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
                 <RadioButton Content="WinGet" IsChecked="{Binding PreferredManager, Converter={StaticResource EqualityConverter}, ConverterParameter=WinGet}"/>
                 <RadioButton Content="Choco" IsChecked="{Binding PreferredManager, Converter={StaticResource EqualityConverter}, ConverterParameter=Choco}"/>
@@ -53,12 +52,21 @@
                                 <Border Grid.Column="1" Width="40" Height="40" 
                                         Background="{DynamicResource SystemBaseLowColor}" 
                                         CornerRadius="4" Margin="10,0" ClipToBounds="True">
-                                    <TextBlock Text="{Binding Name[0]}" 
-                                               VerticalAlignment="Center" 
-                                               HorizontalAlignment="Center" 
-                                               FontWeight="Bold" 
-                                               FontSize="20"
-                                               Foreground="#0078d4"/>
+                                    <Panel>
+                                        <!-- Fallback Display Letter -->
+                                        <TextBlock Text="{Binding DisplayLetter}" 
+                                                   IsVisible="{Binding !IsIconLoaded}"
+                                                   VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center" 
+                                                   FontWeight="Bold" 
+                                                   FontSize="20"
+                                                   Foreground="#0078d4"/>
+                                        
+                                        <!-- Loaded Web Icon -->
+                                        <Image Source="{Binding IconBitmap}" 
+                                               IsVisible="{Binding IsIconLoaded}"
+                                               Width="24" Height="24"/>
+                                    </Panel>
                                 </Border>
 
                                 <StackPanel Grid.Column="2" VerticalAlignment="Center">

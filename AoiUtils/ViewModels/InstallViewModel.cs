@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using AoiUtils.Models;
 using AoiUtils.Core.Models;
 using AoiUtils.Core.Services;
 using AoiUtils.Services;
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -17,6 +20,7 @@ public partial class InstallViewModel : ViewModelBase
     private readonly PackageManagerService _packageManager;
     private readonly NotificationService _notificationService;
     private readonly List<AppItem> _allApps;
+    private static readonly HttpClient _httpClient = new HttpClient();
     
     [ObservableProperty]
     private LocalizationManager _localizer;
@@ -34,7 +38,7 @@ public partial class InstallViewModel : ViewModelBase
     private string _progressText = "";
 
     [ObservableProperty]
-    private string _preferredManager = "WinGet"; // WinGet or Choco
+    private string _preferredManager = "WinGet";
 
     public InstallViewModel(
         AppLibraryService appLibrary, 
@@ -46,8 +50,32 @@ public partial class InstallViewModel : ViewModelBase
         _packageManager = packageManager;
         _localizer = localizer;
         _notificationService = notificationService;
-        _allApps = _appLibrary.GetApps();
+        
+        // Map DTOs to UI models
+        _allApps = _appLibrary.GetApps().Select(dto => new AppItem(
+            dto.Id, dto.Name, dto.Description, dto.Category, 
+            dto.WinGetId, dto.ChocoId, dto.Website)).ToList();
+            
         _filteredApps = new ObservableCollection<AppItem>(_allApps);
+
+        _ = LoadIconsAsync();
+    }
+
+    private async Task LoadIconsAsync()
+    {
+        foreach (var app in _allApps)
+        {
+            if (string.IsNullOrEmpty(app.IconUrl)) continue;
+
+            try
+            {
+                var bytes = await _httpClient.GetByteArrayAsync(app.IconUrl);
+                using var ms = new System.IO.MemoryStream(bytes);
+                app.IconBitmap = new Bitmap(ms);
+                app.IsIconLoaded = true;
+            }
+            catch { /* Fallback to letter icon */ }
+        }
     }
 
     partial void OnSearchTextChanged(string value) => FilterApps();
@@ -81,18 +109,12 @@ public partial class InstallViewModel : ViewModelBase
             ProcessResult result;
 
             if (PreferredManager == "Choco")
-            {
                 result = await _packageManager.InstallWithChocoAsync(app.ChocoId);
-            }
             else
-            {
                 result = await _packageManager.InstallWithWinGetAsync(app.WinGetId);
-            }
 
             if (!result.IsSuccess)
-            {
                 _notificationService.Show($"Failed to install {app.Name}");
-            }
         }
 
         _notificationService.Show(Localizer["InstallationComplete"]);
