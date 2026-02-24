@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AppName" xml:space="preserve">
+    <value>Aoi Utils</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Debloat" xml:space="preserve">
+    <value>Debloat</value>
+  </data>
+  <data name="Tweaks" xml:space="preserve">
+    <value>Tweaks</value>
+  </data>
+  <data name="SystemStatus" xml:space="preserve">
+    <value>System Status</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="WinGet" xml:space="preserve">
+    <value>WinGet</value>
+  </data>
+  <data name="Chocolatey" xml:space="preserve">
+    <value>Chocolatey</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>Quick Actions</value>
+  </data>
+</root>

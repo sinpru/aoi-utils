@@ -5,6 +5,7 @@ using Avalonia.Markup.Xaml;
 using AoiUtils.ViewModels;
 using AoiUtils.Views;
 using AoiUtils.Core.Services;
+using AoiUtils.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AoiUtils;
@@ -25,6 +26,10 @@ public partial class App : Application
         // Core Services
         services.AddSingleton<SystemRunner>();
         services.AddSingleton<PackageManagerService>();
+        services.AddSingleton<SettingsService>();
+
+        // UI Services
+        services.AddSingleton<LocalizationManager>();
 
         // ViewModels
         services.AddTransient<MainWindowViewModel>();

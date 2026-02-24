@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="AppName" xml:space="preserve">
+    <value>Aoi Utils</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Bảng điều khiển</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Debloat" xml:space="preserve">
+    <value>Gỡ bỏ rác</value>
+  </data>
+  <data name="Tweaks" xml:space="preserve">
+    <value>Tùy chỉnh</value>
+  </data>
+  <data name="SystemStatus" xml:space="preserve">
+    <value>Trạng thái hệ thống</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Làm mới</value>
+  </data>
+  <data name="WinGet" xml:space="preserve">
+    <value>WinGet</value>
+  </data>
+  <data name="Chocolatey" xml:space="preserve">
+    <value>Chocolatey</value>
+  </data>
+  <data name="QuickActions" xml:space="preserve">
+    <value>Thao tác nhanh</value>
+  </data>
+</root>
