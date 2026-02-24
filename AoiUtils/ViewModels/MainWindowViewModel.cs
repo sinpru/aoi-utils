@@ -26,17 +26,20 @@ public partial class MainWindowViewModel : ViewModelBase
     private string _chocoStatus = "...";
 
     private readonly InstallViewModel _installViewModel;
+    private readonly DebloatViewModel _debloatViewModel;
 
     public MainWindowViewModel(
         PackageManagerService packageManagerService, 
         SettingsService settingsService,
         LocalizationManager localizer,
-        InstallViewModel installViewModel)
+        InstallViewModel installViewModel,
+        DebloatViewModel debloatViewModel)
     {
         _packageManagerService = packageManagerService;
         _settingsService = settingsService;
         _localizer = localizer;
         _installViewModel = installViewModel;
+        _debloatViewModel = debloatViewModel;
         
         _currentPage = this; // Default to Dashboard (self)
         _ = CheckStatusAsync();
@@ -47,6 +50,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [RelayCommand]
     private void NavigateToInstall() => CurrentPage = _installViewModel;
+
+    [RelayCommand]
+    private void NavigateToDebloat() => CurrentPage = _debloatViewModel;
 
     [RelayCommand]
     private async Task CheckStatusAsync()

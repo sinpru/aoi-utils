@@ -41,7 +41,7 @@
                             </Button>
                         </ListBoxItem>
                         <ListBoxItem Padding="0">
-                            <Button Command="" Classes="SideMenu" IsEnabled="False">
+                            <Button Command="{Binding NavigateToDebloatCommand}" Classes="SideMenu">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <PathIcon Data="{StaticResource shield_regular}" Width="18" Height="18"/>
                                     <TextBlock Text="{Binding Localizer[Debloat]}" VerticalAlignment="Center"/>

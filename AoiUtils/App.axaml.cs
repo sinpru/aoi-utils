@@ -28,6 +28,7 @@ public partial class App : Application
         services.AddSingleton<PackageManagerService>();
         services.AddSingleton<SettingsService>();
         services.AddSingleton<AppLibraryService>();
+        services.AddSingleton<DebloatService>();
 
         // UI Services
         services.AddSingleton<LocalizationManager>();
@@ -35,6 +36,7 @@ public partial class App : Application
         // ViewModels
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<InstallViewModel>();
+        services.AddTransient<DebloatViewModel>();
 
         Services = services.BuildServiceProvider();
 
